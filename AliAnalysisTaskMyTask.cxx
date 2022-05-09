@@ -36,8 +36,8 @@ class AliAnalysisTaskMyTask;    // your analysis class
 ClassImp(AliAnalysisTaskMyTask) // classimp: necessary for root
 
 AliAnalysisTaskMyTask::AliAnalysisTaskMyTask() : AliAnalysisTaskSE(),
-  fPeriod("LHC10h"),
-  fTrigger("kMB"),
+  fPeriod("LHC15o"),
+  fTrigger("kINT7"),
   fDcaXYCut(2.4),
   fDcaZCut(3.2),
   fAOD(nullptr),
@@ -67,8 +67,8 @@ AliAnalysisTaskMyTask::AliAnalysisTaskMyTask() : AliAnalysisTaskSE(),
 }
 //_____________________________________________________________________________
 AliAnalysisTaskMyTask::AliAnalysisTaskMyTask(const char* name) : AliAnalysisTaskSE(name),
-  fPeriod("LHC10h"),
-  fTrigger("kMB"),
+  fPeriod("LHC15o"),
+  fTrigger("kINT7"),
   fDcaXYCut(2.4),
   fDcaZCut(3.2),
   fAOD(nullptr),

@@ -135,13 +135,13 @@ void runAnalysis()
           // MC has no prefix, data has prefix 000
           alienHandler->SetRunPrefix("000");
           alienHandler->AddRunNumber(244917);
-          alienHandler->AddRunNumber(244918);
-          alienHandler->AddRunNumber(244975);
-          alienHandler->AddRunNumber(244980);
-          alienHandler->AddRunNumber(244982);
-          alienHandler->AddRunNumber(244983);
-          alienHandler->AddRunNumber(245061);
-          alienHandler->AddRunNumber(245064);
+          // alienHandler->AddRunNumber(244918);
+          // alienHandler->AddRunNumber(244975);
+          // alienHandler->AddRunNumber(244980);
+          // alienHandler->AddRunNumber(244982);
+          // alienHandler->AddRunNumber(244983);
+          // alienHandler->AddRunNumber(245061);
+          // alienHandler->AddRunNumber(245064);
         }
         if (dataset.EqualTo("LHC18q")) {
           // select the input data
