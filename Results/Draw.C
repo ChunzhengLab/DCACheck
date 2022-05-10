@@ -10,8 +10,8 @@ template<typename TH>
 void DrawHist(TH *hist, TCanvas* c, int bLogy, bool bColz);
 
 void Draw() {
-  //TFile* inputFile = TFile::Open("./LHC10h/AnalysisResults_10h_139310.root");
-  TFile* inputFile = TFile::Open("./LHC15o/AnalysisResults_15o_244917.root");
+  TFile* inputFile = TFile::Open("./LHC10h/AnalysisResults_10h_139310.root");
+  //TFile* inputFile = TFile::Open("./LHC15o/AnalysisResults_15o_244917.root");
   TDirectoryFile *inputFolder = (TDirectoryFile*)inputFile->Get("MyTask");
 
   TList* inputList = nullptr;
@@ -85,6 +85,29 @@ void Draw() {
       fHist2DPtVsDCAXY[i][jFB] = (TH2F*)inputList->FindObject(Form("fHist2DPtVsDCAXY_%s_%s", charFB, charDCACut));
       fHist2DPtVsDCAZ[i][jFB] = (TH2F*)inputList->FindObject(Form("fHist2DPtVsDCAZ_%s_%s", charFB, charDCACut));
 
+      fHist2DnSigmaPionTPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaKaonTPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaProtonTPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaDeuteronTPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaTritonTPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaHe3TPCTOF[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DPtVsDCAXY[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+      fHist2DPtVsDCAZ[i][jFB] -> GetXaxis()->SetRangeUser(-10,10);
+
+      fHist2DnSigmaPionTPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaKaonTPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaProtonTPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaDeuteronTPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaTritonTPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DnSigmaHe3TPCTOF[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DPtVsDCAXY[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+      fHist2DPtVsDCAZ[i][jFB] -> GetYaxis()->SetRangeUser(-10,10);
+
+      // fHist2DPtVsDCAXY[i][jFB] ->GetXaxis()->SetRangeUser(0,5);
+      // fHist2DPtVsDCAZ[i][jFB]  ->GetYaxis()->SetRangeUser(-5,5);
+
+
+
       fHistDcaXY[i][jFB] ->GetXaxis()->SetRangeUser(-5, 5);
       fHistDcaZ[i][jFB] ->GetXaxis()->SetRangeUser(-5, 5);
       fHistPt[i][jFB] ->GetXaxis()->SetRangeUser(0, 5);
@@ -97,34 +120,34 @@ void Draw() {
 
   TCanvas* cHistDcaXY                  = new TCanvas("HistDcaXY"                 ,"HistDcaXY"                 ,3000,300); 
   TCanvas* cHistDcaZ                   = new TCanvas("HistDcaZ"                  ,"HistDcaZ"                  ,3000,300);
-  TCanvas* cHistPt                     = new TCanvas("HistPt"                    ,"HistPt"                    ,3000,300);
-  TCanvas* cHistEta                    = new TCanvas("HistEta"                   ,"HistEta"                   ,3000,300);
-  TCanvas* cHistPhi                    = new TCanvas("HistPhi"                   ,"HistPhi"                   ,3000,300);
-  TCanvas* cHistChi2                   = new TCanvas("HistChi2"                  ,"HistChi2"                  ,3000,300);
-  TCanvas* cHistNCl                    = new TCanvas("HistNCl"                   ,"HistNCl"                   ,3000,300);
-  // TCanvas* cHist2DnSigmaPionTPCTOF     = new TCanvas("Hist2DnSigmaPionTPCTOF"    ,"Hist2DnSigmaPionTPCTOF"    ,3000,300);
-  // TCanvas* cHist2DnSigmaKaonTPCTOF     = new TCanvas("Hist2DnSigmaKaonTPCTOF"    ,"Hist2DnSigmaKaonTPCTOF"    ,3000,300);
-  // TCanvas* cHist2DnSigmaProtonTPCTOF   = new TCanvas("Hist2DnSigmaProtonTPCTOF"  ,"Hist2DnSigmaProtonTPCTOF"  ,3000,300);
-  // TCanvas* cHist2DnSigmaDeuteronTPCTOF = new TCanvas("Hist2DnSigmaDeuteronTPCTOF","Hist2DnSigmaDeuteronTPCTOF",3000,300);
-  // TCanvas* cHist2DnSigmaTritonTPCTOF   = new TCanvas("Hist2DnSigmaTritonTPCTOF"  ,"Hist2DnSigmaTritonTPCTOF"  ,3000,300);
-  // TCanvas* cHist2DnSigmaHe3TPCTOF      = new TCanvas("Hist2DnSigmaHe3TPCTOF"     ,"Hist2DnSigmaHe3TPCTOF"     ,3000,300);
-  // TCanvas* cHist2DPtVsDCAXY            = new TCanvas("Hist2DPtVsDCAXY"           ,"Hist2DPtVsDCAXY"           ,3000,300);
-  // TCanvas* cHist2DPtVsDCAZ             = new TCanvas("Hist2DPtVsDCAZ"            ,"Hist2DPtVsDCAZ"            ,3000,300);
+  // TCanvas* cHistPt                     = new TCanvas("HistPt"                    ,"HistPt"                    ,3000,300);
+  // TCanvas* cHistEta                    = new TCanvas("HistEta"                   ,"HistEta"                   ,3000,300);
+  // TCanvas* cHistPhi                    = new TCanvas("HistPhi"                   ,"HistPhi"                   ,3000,300);
+  // TCanvas* cHistChi2                   = new TCanvas("HistChi2"                  ,"HistChi2"                  ,3000,300);
+  // TCanvas* cHistNCl                    = new TCanvas("HistNCl"                   ,"HistNCl"                   ,3000,300);
+  TCanvas* cHist2DnSigmaPionTPCTOF     = new TCanvas("Hist2DnSigmaPionTPCTOF"    ,"Hist2DnSigmaPionTPCTOF"    ,3000,300);
+  TCanvas* cHist2DnSigmaKaonTPCTOF     = new TCanvas("Hist2DnSigmaKaonTPCTOF"    ,"Hist2DnSigmaKaonTPCTOF"    ,3000,300);
+  TCanvas* cHist2DnSigmaProtonTPCTOF   = new TCanvas("Hist2DnSigmaProtonTPCTOF"  ,"Hist2DnSigmaProtonTPCTOF"  ,3000,300);
+  TCanvas* cHist2DnSigmaDeuteronTPCTOF = new TCanvas("Hist2DnSigmaDeuteronTPCTOF","Hist2DnSigmaDeuteronTPCTOF",3000,300);
+  TCanvas* cHist2DnSigmaTritonTPCTOF   = new TCanvas("Hist2DnSigmaTritonTPCTOF"  ,"Hist2DnSigmaTritonTPCTOF"  ,3000,300);
+  TCanvas* cHist2DnSigmaHe3TPCTOF      = new TCanvas("Hist2DnSigmaHe3TPCTOF"     ,"Hist2DnSigmaHe3TPCTOF"     ,3000,300);
+  TCanvas* cHist2DPtVsDCAXY            = new TCanvas("Hist2DPtVsDCAXY"           ,"Hist2DPtVsDCAXY"           ,3000,300);
+  TCanvas* cHist2DPtVsDCAZ             = new TCanvas("Hist2DPtVsDCAZ"            ,"Hist2DPtVsDCAZ"            ,3000,300);
   DrawHist(fHistDcaXY, cHistDcaXY, 1, 0);
   DrawHist(fHistDcaZ, cHistDcaZ, 1, 0);
-  DrawHist(fHistPt , cHistPt, 0, 0);
-  DrawHist(fHistEta, cHistEta, 0, 0);
-  DrawHist(fHistPhi, cHistPhi, 0, 0);
-  DrawHist(fHistChi2, cHistChi2, 0, 0);
-  DrawHist(fHistNCl , cHistNCl, 0, 0);
-  // DrawHist(fHist2DnSigmaPionTPCTOF, cHist2DnSigmaPionTPCTOF, 0, 1);
-  // DrawHist(fHist2DnSigmaKaonTPCTOF, cHist2DnSigmaKaonTPCTOF, 0, 1);
-  // DrawHist(fHist2DnSigmaProtonTPCTOF, cHist2DnSigmaProtonTPCTOF, 0, 1);
-  // DrawHist(fHist2DnSigmaDeuteronTPCTOF, cHist2DnSigmaDeuteronTPCTOF, 0, 1);
-  // DrawHist(fHist2DnSigmaTritonTPCTOF, cHist2DnSigmaTritonTPCTOF, 0, 1);
-  // DrawHist(fHist2DnSigmaHe3TPCTOF, cHist2DnSigmaHe3TPCTOF, 0, 1);
-  // DrawHist(fHist2DPtVsDCAXY, cHist2DPtVsDCAXY, 0, 1);
-  // DrawHist(fHist2DPtVsDCAZ, cHist2DPtVsDCAZ, 0, 1);
+  // DrawHist(fHistPt , cHistPt, 0, 0);
+  // DrawHist(fHistEta, cHistEta, 0, 0);
+  // DrawHist(fHistPhi, cHistPhi, 0, 0);
+  // DrawHist(fHistChi2, cHistChi2, 0, 0);
+  // DrawHist(fHistNCl , cHistNCl, 0, 0);
+  DrawHist(fHist2DnSigmaPionTPCTOF, cHist2DnSigmaPionTPCTOF, 0, 1);
+  DrawHist(fHist2DnSigmaKaonTPCTOF, cHist2DnSigmaKaonTPCTOF, 0, 1);
+  DrawHist(fHist2DnSigmaProtonTPCTOF, cHist2DnSigmaProtonTPCTOF, 0, 1);
+  DrawHist(fHist2DnSigmaDeuteronTPCTOF, cHist2DnSigmaDeuteronTPCTOF, 0, 1);
+  DrawHist(fHist2DnSigmaTritonTPCTOF, cHist2DnSigmaTritonTPCTOF, 0, 1);
+  DrawHist(fHist2DnSigmaHe3TPCTOF, cHist2DnSigmaHe3TPCTOF, 0, 1);
+  DrawHist(fHist2DPtVsDCAXY, cHist2DPtVsDCAXY, 0, 1);
+  DrawHist(fHist2DPtVsDCAZ, cHist2DPtVsDCAZ, 0, 1);
 }
 
 
