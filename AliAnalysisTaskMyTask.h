@@ -45,6 +45,23 @@ class AliAnalysisTaskMyTask : public AliAnalysisTaskSE
         TH2F*                   fHistPtVsDCAXY[2][10];
         TH2F*                   fHistPtVsDCAZ[2][10];
 
+	//\ dowang
+        TH2F*                   fHistTOFMassVsPt[2][10];
+        TH2F*                   fHistdEdxVsPt[2][10];
+
+        TH2F*                   fHistSigmaPionTPCVsPt[2][10];
+        TH2F*                   fHistSigmaKaonTPCVsPt[2][10];
+	TH2F*                   fHistSigmaProtonTPCVsPt[2][10];
+        TH2F*                   fHistSigmaDeuteronTPCVsPt[2][10];
+        TH2F*                   fHistSigmaTritonTPCVsPt[2][10];
+        TH2F*                   fHistSigmaHe3TPCVsPt[2][10];
+
+        TH2F*                   fHistSigmaPionTOFVsPt[2][10];
+        TH2F*                   fHistSigmaKaonTOFVsPt[2][10];
+	TH2F*                   fHistSigmaProtonTOFVsPt[2][10];
+        TH2F*                   fHistSigmaDeuteronTOFVsPt[2][10];
+        TH2F*                   fHistSigmaTritonTOFVsPt[2][10];
+        TH2F*                   fHistSigmaHe3TOFVsPt[2][10];
 
         AliAnalysisTaskMyTask(const AliAnalysisTaskMyTask&); // not implemented
         AliAnalysisTaskMyTask& operator=(const AliAnalysisTaskMyTask&); // not implemented
