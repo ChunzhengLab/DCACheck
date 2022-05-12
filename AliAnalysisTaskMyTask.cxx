@@ -32,6 +32,16 @@
 #include "AliAnalysisTaskMyTask.h"
 #include "AliMultSelection.h"
 
+double PionMass = 0.13957018;//0.13956995;
+double KaonMass = 0.493677;
+double ProtonMass = 0.938272013;
+
+double DeuteronMass = 1.8756;
+double TritonMass = 2.8089;
+double He3Mass = 2.8084;
+double AlphaMass = 3.7274;
+
+
 class AliAnalysisTaskMyTask;    // your analysis class
 ClassImp(AliAnalysisTaskMyTask) // classimp: necessary for root
 
@@ -47,21 +57,46 @@ AliAnalysisTaskMyTask::AliAnalysisTaskMyTask() : AliAnalysisTaskSE(),
 {
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 10; j++) {
-      fHistDcaXY[i][j]               = nullptr;
-      fHistDcaZ[i][j]                = nullptr;
-      fHistPt[i][j]                  = nullptr;
-      fHistEta[i][j]                 = nullptr;
-      fHistPhi[i][j]                 = nullptr;
-      fHistChi2[i][j]                = nullptr;
-      fHistNCl[i][j]                 = nullptr;
-      fHistSigmaPionTPCTOF[i][j]     = nullptr;
-      fHistSigmaKaonTPCTOF[i][j]     = nullptr;
-      fHistSigmaProtonTPCTOF[i][j]   = nullptr;
-      fHistSigmaDeuteronTPCTOF[i][j] = nullptr;
-      fHistSigmaTritonTPCTOF[i][j]   = nullptr;
-      fHistSigmaHe3TPCTOF[i][j]      = nullptr;
-      fHistPtVsDCAXY[i][j]           = nullptr;
-      fHistPtVsDCAZ[i][j]            = nullptr;
+      fHistDcaXY[i][j]                  = nullptr;
+      fHistDcaZ[i][j]                   = nullptr;
+      fHistPt[i][j]                     = nullptr;
+      fHistEta[i][j]                    = nullptr;
+      fHistPhi[i][j]                    = nullptr;
+      fHistChi2[i][j]                   = nullptr;
+      fHistNCl[i][j]                    = nullptr;
+      fHistSigmaPionTPCTOF[i][j]        = nullptr;
+      fHistSigmaKaonTPCTOF[i][j]        = nullptr;
+      fHistSigmaProtonTPCTOF[i][j]      = nullptr;
+      fHistSigmaDeuteronTPCTOF[i][j]    = nullptr;
+      fHistSigmaTritonTPCTOF[i][j]      = nullptr;
+      fHistSigmaHe3TPCTOF[i][j]         = nullptr;
+      fHistPtVsDCAXY[i][j]              = nullptr;
+      fHistPtVsDCAZ[i][j]               = nullptr;
+      //\ dowang
+      //\ mass part
+      fHistTOFMassVsPt[i][j]            = nullptr;
+      //\ PID part
+      fHistdEdxVsPt[i][j]               = nullptr;
+      // fHistPiondEdxVsPt[i][j]           = nullptr;
+      // fHistSigmaKaondEdxVsPt[i][j]      = nullptr;
+      // fHistSigmaDeuterondEdxVsPt[i][j]  = nullptr;
+      // fHistSigmaTritondEdxVsPt[i][j]    = nullptr;
+      // fHistSigmaHe3dEdxVsPt[i][j]       = nullptr;
+
+      fHistSigmaPionTPCVsPt[i][j]       = nullptr;
+      fHistSigmaKaonTPCVsPt[i][j]       = nullptr;
+      fHistSigmaProtonTPCVsPt[i][j]     = nullptr;
+      fHistSigmaDeuteronTPCVsPt[i][j]   = nullptr;
+      fHistSigmaTritonTPCVsPt[i][j]     = nullptr;
+      fHistSigmaHe3TPCVsPt[i][j]        = nullptr;
+
+      fHistSigmaPionTOFVsPt[i][j]       = nullptr;
+      fHistSigmaKaonTOFVsPt[i][j]       = nullptr;
+      fHistSigmaProtonTOFVsPt[i][j]     = nullptr;
+      fHistSigmaDeuteronTOFVsPt[i][j]   = nullptr;
+      fHistSigmaTritonTOFVsPt[i][j]     = nullptr;
+      fHistSigmaHe3TOFVsPt[i][j]        = nullptr;
+
     }
   }
 }
@@ -78,21 +113,44 @@ AliAnalysisTaskMyTask::AliAnalysisTaskMyTask(const char* name) : AliAnalysisTask
 {
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 10; j++) {
-      fHistDcaXY[i][j]               = nullptr;
-      fHistDcaZ[i][j]                = nullptr;
-      fHistPt[i][j]                  = nullptr;
-      fHistEta[i][j]                 = nullptr;
-      fHistPhi[i][j]                 = nullptr;
-      fHistChi2[i][j]                = nullptr;
-      fHistNCl[i][j]                 = nullptr;
-      fHistSigmaPionTPCTOF[i][j]     = nullptr;
-      fHistSigmaKaonTPCTOF[i][j]     = nullptr;
-      fHistSigmaProtonTPCTOF[i][j]   = nullptr;
-      fHistSigmaDeuteronTPCTOF[i][j] = nullptr;
-      fHistSigmaTritonTPCTOF[i][j]   = nullptr;
-      fHistSigmaHe3TPCTOF[i][j]      = nullptr;
-      fHistPtVsDCAXY[i][j]           = nullptr;
-      fHistPtVsDCAZ[i][j]            = nullptr;
+      fHistDcaXY[i][j]                  = nullptr;
+      fHistDcaZ[i][j]                   = nullptr;
+      fHistPt[i][j]                     = nullptr;
+      fHistEta[i][j]                    = nullptr;
+      fHistPhi[i][j]                    = nullptr;
+      fHistChi2[i][j]                   = nullptr;
+      fHistNCl[i][j]                    = nullptr;
+      fHistSigmaPionTPCTOF[i][j]        = nullptr;
+      fHistSigmaKaonTPCTOF[i][j]        = nullptr;
+      fHistSigmaProtonTPCTOF[i][j]      = nullptr;
+      fHistSigmaDeuteronTPCTOF[i][j]    = nullptr;
+      fHistSigmaTritonTPCTOF[i][j]      = nullptr;
+      fHistSigmaHe3TPCTOF[i][j]         = nullptr;
+      fHistPtVsDCAXY[i][j]              = nullptr;
+      fHistPtVsDCAZ[i][j]               = nullptr;
+      //\ dowang
+      fHistTOFMassVsPt[i][j]            = nullptr;
+      //\ PID part
+      fHistdEdxVsPt[i][j]               = nullptr;
+      // fHistPiondEdxVsPt[i][j]           = nullptr;
+      // fHistKaondEdxVsPt[i][j]           = nullptr;
+      // fHistDeuterondEdxVsPt[i][j]       = nullptr;
+      // fHistTritondEdxVsPt[i][j]         = nullptr;
+      // fHistHe3dEdxVsPt[i][j]            = nullptr;
+
+      fHistSigmaPionTPCVsPt[i][j]       = nullptr;
+      fHistSigmaKaonTPCVsPt[i][j]       = nullptr;
+      fHistSigmaProtonTPCVsPt[i][j]     = nullptr;
+      fHistSigmaDeuteronTPCVsPt[i][j]   = nullptr;
+      fHistSigmaTritonTPCVsPt[i][j]     = nullptr;
+      fHistSigmaHe3TPCVsPt[i][j]        = nullptr;
+
+      fHistSigmaPionTOFVsPt[i][j]       = nullptr;
+      fHistSigmaKaonTOFVsPt[i][j]       = nullptr;
+      fHistSigmaProtonTOFVsPt[i][j]     = nullptr;
+      fHistSigmaDeuteronTOFVsPt[i][j]   = nullptr;
+      fHistSigmaTritonTOFVsPt[i][j]     = nullptr;
+      fHistSigmaHe3TOFVsPt[i][j]        = nullptr;
     }
   }
   DefineInput(0, TChain::Class());
@@ -158,6 +216,55 @@ void AliAnalysisTaskMyTask::UserCreateOutputObjects()
       fOutputList -> Add(fHistSigmaHe3TPCTOF[i][jFB]);
       fOutputList -> Add(fHistPtVsDCAXY[i][jFB]);
       fOutputList -> Add(fHistPtVsDCAZ[i][jFB]);
+      //\ dowang
+      fHistTOFMassVsPt[i][jFB]            = new TH2F(Form("fHistTOFMassVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 550, -1.0, 10.0);
+      //\ PID part
+      fHistdEdxVsPt[i][jFB]               = new TH2F(Form("fHistdEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 500, 0.0, 1000.0);
+      // fHistPiondEdxVsPt[i][j]           = new TH2F(Form("fHistPiondEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 250, 0.0, 500.0);
+      // fHistKaondEdxVsPt[i][j]           = new TH2F(Form("fHistKaondEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 250, 0.0, 500.0);
+      // fHistDeuterondEdxVsPt[i][j]       = new TH2F(Form("fHistDeuterondEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 250, 0.0, 500.0);
+      // fHistTritondEdxVsPt[i][j]         = new TH2F(Form("fHistTritondEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 250, 0.0, 500.0);
+      // fHistHe3dEdxVsPt[i][j]            = new TH2F(Form("fHistHe3dEdxVsPt_%s_%s", charFB, charDCACut), " ", 100, 0.0, 5.0, 250, 0.0, 500.0);
+
+      fHistSigmaPionTPCVsPt[i][jFB]       = new TH2F(Form("fHistSigmaPionTPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaKaonTPCVsPt[i][jFB]       = new TH2F(Form("fHistSigmaKaonTPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaProtonTPCVsPt[i][jFB]     = new TH2F(Form("fHistSigmaProtonTPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaDeuteronTPCVsPt[i][jFB]   = new TH2F(Form("fHistSigmaDeuteronTPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaTritonTPCVsPt[i][jFB]     = new TH2F(Form("fHistSigmaTritonTPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaHe3TPCVsPt[i][jFB]        = new TH2F(Form("fHistSigmaHe3TPCVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+
+      fHistSigmaPionTOFVsPt[i][jFB]       = new TH2F(Form("fHistSigmaPionTOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaKaonTOFVsPt[i][jFB]       = new TH2F(Form("fHistSigmaKaonTOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaProtonTOFVsPt[i][jFB]     = new TH2F(Form("fHistSigmaProtonTOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaDeuteronTOFVsPt[i][jFB]   = new TH2F(Form("fHistSigmaDeuteronTOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaTritonTOFVsPt[i][jFB]     = new TH2F(Form("fHistSigmaTritonTOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+      fHistSigmaHe3TOFVsPt[i][jFB]        = new TH2F(Form("fHistSigmaHe3TOFVsPt_%s_%s", charFB, charDCACut)," ", 100, 0.0, 5.0, 100, -5.0, 5.0);
+
+      fOutputList -> Add(fHistTOFMassVsPt[i][jFB]);
+      fOutputList -> Add(fHistdEdxVsPt[i][jFB]);
+
+      // fOutputList -> Add(fHistPiondEdxVsPt[i][j]);
+      // fOutputList -> Add(fHistKaondEdxVsPt[i][j]);
+      // fOutputList -> Add(fHistDeuterondEdxVsPt[i][j]);
+      // fOutputList -> Add(fHistTritondEdxVsPt[i][j]);
+      // fOutputList -> Add(fHistHe3dEdxVsPt[i][j]);
+
+      fOutputList -> Add(fHistSigmaPionTPCVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaKaonTPCVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaProtonTPCVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaDeuteronTPCVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaTritonTPCVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaHe3TPCVsPt[i][jFB]);
+
+      fOutputList -> Add(fHistSigmaPionTOFVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaKaonTOFVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaProtonTOFVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaDeuteronTOFVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaTritonTOFVsPt[i][jFB]);
+      fOutputList -> Add(fHistSigmaHe3TOFVsPt[i][jFB]);
+
+
+
     }
   }
   PostData(1, fOutputList);
@@ -208,6 +315,8 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
       if (fabs(dz) > 0.2 || nsigTot > 10 || nsigTrc > 20) return;
   }
   
+
+
   //----------------------------
   // Centrality
   //----------------------------
@@ -228,8 +337,36 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
   // Track loop
   //----------------------------
   int nTracks(fAOD->GetNumberOfTracks());
+
+  //----------------------------
+  // Make map, only for FilterBit = 7
+  //----------------------------
+  const int UNDEFINED_LABEL = -1;
+  std::vector<int> labels(nTracks, UNDEFINED_LABEL);
   for(int iTrack(0); iTrack < nTracks; iTrack++) {
     AliAODTrack* track = static_cast<AliAODTrack*>(fAOD->GetTrack(iTrack));
+
+    if (!track->TestFilterBit(1<<7)) {
+      // Skip TPC-only tracks
+      const int id = track->GetID();
+      if (id < 0) {
+        continue;
+      }
+      // Resize labels vector if "id" is larger than mapping allows
+      if (static_cast<size_t>(id) >= labels.size()) {
+        labels.resize(id + 1024, UNDEFINED_LABEL);
+      }
+      labels[id] = iTrack;
+  }
+	}
+cout<<"good "<<endl;
+
+  for(int iTrack(0); iTrack < nTracks; iTrack++) {
+    AliAODTrack* track = static_cast<AliAODTrack*>(fAOD->GetTrack(iTrack));
+
+   // const Int_t pid_track_id = labels[-1 - fAOD->GetTrack(iTrack)->GetID()];
+   // AliAODTrack *aodtrackpid = static_cast<AliAODTrack *>(fAOD->GetTrack(pid_track_id));
+
     if(!track) continue;
 
     double mag = fAOD->GetMagneticField();
@@ -244,6 +381,7 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
     double chi2           = track->Chi2perNDF();
     unsigned short nhits  = track->GetTPCNcls();
 
+cout<<"pt "<<pt<<endl;
 
     float nSigmaTPCPion     = fPIDResponse -> NumberOfSigmasTPC(track, AliPID::kPion);
     float nSigmaTPCKaon     = fPIDResponse -> NumberOfSigmasTPC(track, AliPID::kKaon);
@@ -258,6 +396,21 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
     float nSigmaTOFDeuteron = fPIDResponse -> NumberOfSigmasTOF(track, AliPID::kDeuteron);
     float nSigmaTOFTriton   = fPIDResponse -> NumberOfSigmasTOF(track, AliPID::kTriton);
     float nSigmaTOFHe3      = fPIDResponse -> NumberOfSigmasTOF(track, AliPID::kHe3);
+
+cout<<"nSigmaTPCPion "<<nSigmaTPCPion<<" "<<nSigmaTOFPion<<endl;
+
+    float trackLength = track->GetIntegratedLength();
+    float trackTime = track->GetTOFsignal() - fPIDResponse->GetTOFResponse().GetStartTime(track->P());
+    float MassTOF = -999.;
+    float momentum = track->P();
+    float beta = 0.;
+    if (trackTime > 0. && trackLength > 0.) {
+      beta = trackLength / trackTime / 0.03;
+      if(beta!=0.){
+        MassTOF = momentum * momentum * (1 / (beta * beta) - 1);
+      }
+    }
+cout<<"MassTOF "<<MassTOF<<endl;
 
     int nFBBits = 10;
     TBits FBBits(nFBBits);
@@ -276,24 +429,109 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
 
 
     for (int iFBBits = 0; iFBBits < nFBBits; iFBBits++) {
+      
       if (FBBits.TestBitNumber(iFBBits)) {
-        fHistDcaXY[0][iFBBits]              -> Fill(dca[0]);
-        fHistDcaZ[0][iFBBits]               -> Fill(dca[1]);
+
         fHistPt[0][iFBBits]                 -> Fill(pt);
         fHistEta[0][iFBBits]                -> Fill(eta);
         fHistPhi[0][iFBBits]                -> Fill(phi);
         fHistChi2[0][iFBBits]               -> Fill(chi2);
         fHistNCl[0][iFBBits]                -> Fill(nhits);
-        fHistSigmaPionTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCPion, nSigmaTOFPion);
-        fHistSigmaKaonTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCKaon, nSigmaTOFKaon);
-        fHistSigmaProtonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCProton, nSigmaTOFProton);   
-        fHistSigmaDeuteronTPCTOF[0][iFBBits]-> Fill(nSigmaTPCDeuteron, nSigmaTOFDeuteron);
-        fHistSigmaTritonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCTriton, nSigmaTOFTriton);
-        fHistSigmaHe3TPCTOF[0][iFBBits]     -> Fill(nSigmaTPCHe3, nSigmaTOFHe3);
-        fHistPtVsDCAXY[0][iFBBits]          -> Fill(pt, dca[0]);
-        fHistPtVsDCAZ[0][iFBBits]           -> Fill(pt, dca[1]);
-      }
-    }
+        fHistdEdxVsPt[0][iFBBits]           -> Fill(pt, dedx);
+        
+
+        if(fPeriod.EqualTo("LHC15o") && iFBBits==5){
+		        const Int_t pid_track_id = labels[-1 - fAOD->GetTrack(iTrack)->GetID()];
+		        AliAODTrack *aodtrackpid = static_cast<AliAODTrack *>(fAOD->GetTrack(pid_track_id));
+		   
+            dca[0] = -999.; dca[1] = -999.;
+            cov[0] = -999.; cov[1] = -999.; cov[2] = -999.;
+            if(!track->PropagateToDCA(fVtx, mag, 100., dca, cov)){
+                dca[0] = -999.;
+                dca[1] = -999.;
+            }
+            fHistDcaXY[0][iFBBits]              -> Fill(dca[0]);
+            fHistDcaZ[0][iFBBits]               -> Fill(dca[1]);
+            fHistPtVsDCAXY[0][iFBBits]          -> Fill(pt, dca[0]);
+            fHistPtVsDCAZ[0][iFBBits]           -> Fill(pt, dca[1]);
+
+
+            nSigmaTPCPion     = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kPion);
+            nSigmaTPCKaon     = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kKaon);
+            nSigmaTPCProton   = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kProton);
+            nSigmaTPCDeuteron = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kDeuteron);
+            nSigmaTPCTriton   = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kTriton);
+            nSigmaTPCHe3      = fPIDResponse -> NumberOfSigmasTPC(aodtrackpid, AliPID::kHe3);
+
+            nSigmaTOFPion     = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kPion);
+            nSigmaTOFKaon     = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kKaon);
+            nSigmaTOFProton   = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kProton);
+            nSigmaTOFDeuteron = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kDeuteron);
+            nSigmaTOFTriton   = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kTriton);
+            nSigmaTOFHe3      = fPIDResponse -> NumberOfSigmasTOF(aodtrackpid, AliPID::kHe3);
+
+            
+            trackLength = aodtrackpid->GetIntegratedLength();
+            trackTime = aodtrackpid->GetTOFsignal() - fPIDResponse->GetTOFResponse().GetStartTime(aodtrackpid->P());
+            MassTOF = -999.;
+            momentum = aodtrackpid->P();
+            if (trackTime > 0. && trackLength > 0.) {
+              beta = trackLength / trackTime / 0.03;
+              if(beta!=0.){
+                MassTOF = momentum * momentum * (1 / (beta * beta) - 1);
+              }
+            }
+            
+            fHistTOFMassVsPt[0][iFBBits]            -> Fill(pt, MassTOF);
+            fHistSigmaPionTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCPion);
+            fHistSigmaKaonTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
+            fHistSigmaProtonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFProton);
+            fHistSigmaDeuteronTPCVsPt[0][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
+            fHistSigmaTritonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCPion);
+            fHistSigmaHe3TPCVsPt[0][iFBBits]        -> Fill(pt, nSigmaTPCPion);
+
+            
+            fHistSigmaPionTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFPion);
+            fHistSigmaKaonTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFKaon);
+            fHistSigmaProtonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFProton);
+            fHistSigmaDeuteronTOFVsPt[0][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
+            fHistSigmaTritonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFTriton);
+            fHistSigmaHe3TOFVsPt[0][iFBBits]        -> Fill(pt, nSigmaTOFHe3);
+
+        }else{
+          fHistDcaXY[0][iFBBits]              -> Fill(dca[0]);
+          fHistDcaZ[0][iFBBits]               -> Fill(dca[1]);
+          fHistPtVsDCAXY[0][iFBBits]          -> Fill(pt, dca[0]);
+          fHistPtVsDCAZ[0][iFBBits]           -> Fill(pt, dca[1]);
+
+          fHistSigmaPionTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCPion, nSigmaTOFPion);
+          fHistSigmaKaonTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCKaon, nSigmaTOFKaon);
+          fHistSigmaProtonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCProton, nSigmaTOFProton);   
+          fHistSigmaDeuteronTPCTOF[0][iFBBits]-> Fill(nSigmaTPCDeuteron, nSigmaTOFDeuteron);
+          fHistSigmaTritonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCTriton, nSigmaTOFTriton);
+          fHistSigmaHe3TPCTOF[0][iFBBits]     -> Fill(nSigmaTPCHe3, nSigmaTOFHe3);
+
+          fHistTOFMassVsPt[0][iFBBits]        -> Fill(pt, MassTOF);
+          fHistSigmaPionTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCPion);
+          fHistSigmaKaonTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
+          fHistSigmaProtonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCProton);
+          fHistSigmaDeuteronTPCVsPt[0][iFBBits]   -> Fill(pt, nSigmaTPCDeuteron);
+          fHistSigmaTritonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCPion);
+          fHistSigmaHe3TPCVsPt[0][iFBBits]        -> Fill(pt, nSigmaTPCPion);
+
+          
+          fHistSigmaPionTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFPion);
+          fHistSigmaKaonTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFKaon);
+          fHistSigmaProtonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFProton);
+          fHistSigmaDeuteronTOFVsPt[0][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
+          fHistSigmaTritonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFTriton);
+          fHistSigmaHe3TOFVsPt[0][iFBBits]        -> Fill(pt, nSigmaTOFHe3);
+
+        }//\ end fill part
+
+      }//\ if pass filter bit test 
+    }//\ filter bit loop
+       
 
     if (fabs(dca[0]) > fDcaXYCut) continue;
     if (fabs(dca[1]) > fDcaZCut)  continue;
@@ -315,9 +553,28 @@ void AliAnalysisTaskMyTask::UserExec(Option_t *)
         fHistSigmaHe3TPCTOF[1][iFBBits]     -> Fill(nSigmaTPCHe3, nSigmaTOFHe3);
         fHistPtVsDCAXY[1][iFBBits]          -> Fill(pt, dca[0]);
         fHistPtVsDCAZ[1][iFBBits]           -> Fill(pt, dca[1]);
+
+        //\ dowang
+        fHistTOFMassVsPt[0][iFBBits]        -> Fill(pt, MassTOF);
+        fHistSigmaPionTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCPion);
+        fHistSigmaKaonTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
+        fHistSigmaProtonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCProton);
+        fHistSigmaDeuteronTPCVsPt[0][iFBBits]   -> Fill(pt, nSigmaTPCDeuteron);
+        fHistSigmaTritonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCPion);
+        fHistSigmaHe3TPCVsPt[0][iFBBits]        -> Fill(pt, nSigmaTPCPion);
+
+        
+        fHistSigmaPionTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFPion);
+        fHistSigmaKaonTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFKaon);
+        fHistSigmaProtonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFProton);
+        fHistSigmaDeuteronTOFVsPt[0][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
+        fHistSigmaTritonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFTriton);
+        fHistSigmaHe3TOFVsPt[0][iFBBits]        -> Fill(pt, nSigmaTOFHe3);
+
       }
     }
-  }
+
+  }//\ end track loop
 
   PostData(1, fOutputList);
 }
@@ -328,3 +585,5 @@ void AliAnalysisTaskMyTask::Terminate(Option_t *)
     // called at the END of the analysis (when all events are processed)
 }
 //_____________________________________________________________________________
+
+
