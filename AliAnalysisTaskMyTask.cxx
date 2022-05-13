@@ -381,7 +381,7 @@ cout<<"good "<<endl;
     double chi2           = track->Chi2perNDF();
     unsigned short nhits  = track->GetTPCNcls();
 
-cout<<"pt "<<pt<<endl;
+//cout<<"pt "<<pt<<endl;
 
     float nSigmaTPCPion     = fPIDResponse -> NumberOfSigmasTPC(track, AliPID::kPion);
     float nSigmaTPCKaon     = fPIDResponse -> NumberOfSigmasTPC(track, AliPID::kKaon);
@@ -397,7 +397,7 @@ cout<<"pt "<<pt<<endl;
     float nSigmaTOFTriton   = fPIDResponse -> NumberOfSigmasTOF(track, AliPID::kTriton);
     float nSigmaTOFHe3      = fPIDResponse -> NumberOfSigmasTOF(track, AliPID::kHe3);
 
-cout<<"nSigmaTPCPion "<<nSigmaTPCPion<<" "<<nSigmaTOFPion<<endl;
+//cout<<"nSigmaTPCPion "<<nSigmaTPCPion<<" "<<nSigmaTOFPion<<endl;
 
     float trackLength = track->GetIntegratedLength();
     float trackTime = track->GetTOFsignal() - fPIDResponse->GetTOFResponse().GetStartTime(track->P());
@@ -410,7 +410,7 @@ cout<<"nSigmaTPCPion "<<nSigmaTPCPion<<" "<<nSigmaTOFPion<<endl;
         MassTOF = momentum * momentum * (1 / (beta * beta) - 1);
       }
     }
-cout<<"MassTOF "<<MassTOF<<endl;
+//cout<<"MassTOF "<<MassTOF<<endl;
 
     int nFBBits = 10;
     TBits FBBits(nFBBits);
@@ -481,7 +481,14 @@ cout<<"MassTOF "<<MassTOF<<endl;
                 MassTOF = momentum * momentum * (1 / (beta * beta) - 1);
               }
             }
-            
+           
+            fHistSigmaPionTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCPion, nSigmaTOFPion);
+            fHistSigmaKaonTPCTOF[0][iFBBits]    -> Fill(nSigmaTPCKaon, nSigmaTOFKaon);
+            fHistSigmaProtonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCProton, nSigmaTOFProton);   
+            fHistSigmaDeuteronTPCTOF[0][iFBBits]-> Fill(nSigmaTPCDeuteron, nSigmaTOFDeuteron);
+            fHistSigmaTritonTPCTOF[0][iFBBits]  -> Fill(nSigmaTPCTriton, nSigmaTOFTriton);
+            fHistSigmaHe3TPCTOF[0][iFBBits]     -> Fill(nSigmaTPCHe3, nSigmaTOFHe3);
+ 
             fHistTOFMassVsPt[0][iFBBits]            -> Fill(pt, MassTOF);
             fHistSigmaPionTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCPion);
             fHistSigmaKaonTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
