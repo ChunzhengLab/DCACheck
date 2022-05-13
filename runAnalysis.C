@@ -32,15 +32,34 @@
 //==================================================================
 
 
-void runAnalysis()
+void runAnalysis(int runMode = 0)
 {
     // Dataset
     TString dataset = "LHC15o";//设置dataset名称
     // set if you want to run the analysis locally (kTRUE), or on grid (kFALSE)
-    Bool_t local = kFALSE;
+   Bool_t local;
+Bool_t gridTest;
+// mode 0 = local test
+// mode 1 = grid test
+// mode 2 = grid run merge
+// mode 3 = run 之间 merge
+if(runMode==0){
+local = kTRUE;
+gridTest = kTRUE;
+}
+if(runMode==1||runMode==2||runMode==3){
+local = kFALSE;
+gridTest = kFALSE;
+}
+	 //Bool_t local = kFALSE;
     // if you run on grid, specify test mode (kTRUE) or full grid model (kFALSE)
-    Bool_t gridTest = kFALSE;
+    //Bool_t gridTest = kFALSE;
     
+
+/*
+	Bool_t local = kTRUE;
+	Bool_t gridTest = kTRUE;
+*/
     // since we will compile a class, tell root where to look for headers  
 #if !defined (__CINT__) || defined (__CLING__)
     gInterpreter->ProcessLine(".include $ROOTSYS/include");
@@ -87,12 +106,17 @@ void runAnalysis()
         // if you want to run locally, we need to define some input
         TChain* chain = new TChain("aodTree");
         // add a few files to the chain (change this so that your local files are added)
+/*
         if(dataset.EqualTo("LHC10h")) chain->Add("/Users/wangchunzheng/alice/data/2010/LHC10h/000139510/ESDs/pass2/AOD160/0247/AliAOD.root");//这里要改成本地Data文件路径
         if(dataset.EqualTo("LHC15o")) chain->Add("/Users/wangchunzheng/alice/data/2015/LHC15o/000245151/pass2/AOD252/0008/AliAOD.root");
         if(dataset.EqualTo("LHC18q")) chain->Add("/Users/wangchunzheng/alice/data/2018/LHC18q/000295588/pass3/AOD252/AOD/001/AliAOD.root");
         if(dataset.EqualTo("LHC18r")) chain->Add("/Users/wangchunzheng/alice/data/2018/LHC18r/000296691/pass3/AOD252/0001/AliAOD.root");
         // start the analysis locally, reading the events from the tchain
-        mgr->StartAnalysis("local", chain);
+  
+*/
+//chain->Add("/home/df/work/2021Test/Pass2_AliAOD.root");
+ chain->Add("/afs/cern.ch/user/d/dowang/public/AliAOD.root"); 
+    mgr->StartAnalysis("local", chain);
     } else {
         // if we want to run on grid, we create and configure the plugin
         AliAnalysisAlien *alienHandler = new AliAnalysisAlien();
@@ -103,7 +127,7 @@ void runAnalysis()
         alienHandler->SetAnalysisSource("AliAnalysisTaskMyTask.cxx");
         // select the aliphysics version. all other packages
         // are LOADED AUTOMATICALLY!
-        alienHandler->SetAliPhysicsVersion("vAN-20220316_ROOT6-1");
+        alienHandler->SetAliPhysicsVersion("vAN-20220420_ROOT6-1");
         // set the Alien API version
         alienHandler->SetAPIVersion("V1.1x");
 
@@ -189,8 +213,8 @@ void runAnalysis()
         // (see below) mode, set SetMergeViaJDL(kFALSE) 
         // to collect final results
         alienHandler->SetMaxMergeStages(1);
-        alienHandler->SetMergeViaJDL(kTRUE);
-        //alienHandler->SetMergeViaJDL(kFALSE);
+        if(runMode==1||runMode==2) alienHandler->SetMergeViaJDL(kTRUE);
+        if(runMode==3) alienHandler->SetMergeViaJDL(kFALSE);
 
         // define the output folders
         if (dataset.EqualTo("LHC10h")) alienHandler->SetGridWorkingDir("DCACheck/LHC10h");
@@ -209,8 +233,8 @@ void runAnalysis()
             mgr->StartAnalysis("grid");
         } else {
             // else launch the full grid analysis
-            //alienHandler->SetRunMode("full");
-            alienHandler->SetRunMode("terminate");
+            if(runMode==1) alienHandler->SetRunMode("full");
+            if(runMode==2||runMode==3) alienHandler->SetRunMode("terminate");
             mgr->StartAnalysis("grid");
         }
     }
