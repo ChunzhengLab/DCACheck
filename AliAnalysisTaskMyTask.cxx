@@ -562,21 +562,21 @@ cout<<"good "<<endl;
         fHistPtVsDCAZ[1][iFBBits]           -> Fill(pt, dca[1]);
 
         //\ dowang
-        fHistTOFMassVsPt[0][iFBBits]        -> Fill(pt, MassTOF);
-        fHistSigmaPionTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCPion);
-        fHistSigmaKaonTPCVsPt[0][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
-        fHistSigmaProtonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCProton);
-        fHistSigmaDeuteronTPCVsPt[0][iFBBits]   -> Fill(pt, nSigmaTPCDeuteron);
-        fHistSigmaTritonTPCVsPt[0][iFBBits]     -> Fill(pt, nSigmaTPCPion);
-        fHistSigmaHe3TPCVsPt[0][iFBBits]        -> Fill(pt, nSigmaTPCPion);
+        fHistTOFMassVsPt[1][iFBBits]        -> Fill(pt, MassTOF);
+        fHistSigmaPionTPCVsPt[1][iFBBits]       -> Fill(pt, nSigmaTPCPion);
+        fHistSigmaKaonTPCVsPt[1][iFBBits]       -> Fill(pt, nSigmaTPCKaon);
+        fHistSigmaProtonTPCVsPt[1][iFBBits]     -> Fill(pt, nSigmaTPCProton);
+        fHistSigmaDeuteronTPCVsPt[1][iFBBits]   -> Fill(pt, nSigmaTPCDeuteron);
+        fHistSigmaTritonTPCVsPt[1][iFBBits]     -> Fill(pt, nSigmaTPCPion);
+        fHistSigmaHe3TPCVsPt[1][iFBBits]        -> Fill(pt, nSigmaTPCPion);
 
         
-        fHistSigmaPionTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFPion);
-        fHistSigmaKaonTOFVsPt[0][iFBBits]       -> Fill(pt, nSigmaTOFKaon);
-        fHistSigmaProtonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFProton);
-        fHistSigmaDeuteronTOFVsPt[0][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
-        fHistSigmaTritonTOFVsPt[0][iFBBits]     -> Fill(pt, nSigmaTOFTriton);
-        fHistSigmaHe3TOFVsPt[0][iFBBits]        -> Fill(pt, nSigmaTOFHe3);
+        fHistSigmaPionTOFVsPt[1][iFBBits]       -> Fill(pt, nSigmaTOFPion);
+        fHistSigmaKaonTOFVsPt[1][iFBBits]       -> Fill(pt, nSigmaTOFKaon);
+        fHistSigmaProtonTOFVsPt[1][iFBBits]     -> Fill(pt, nSigmaTOFProton);
+        fHistSigmaDeuteronTOFVsPt[1][iFBBits]   -> Fill(pt, nSigmaTOFDeuteron);
+        fHistSigmaTritonTOFVsPt[1][iFBBits]     -> Fill(pt, nSigmaTOFTriton);
+        fHistSigmaHe3TOFVsPt[1][iFBBits]        -> Fill(pt, nSigmaTOFHe3);
 
       }
     }
