@@ -21,6 +21,7 @@
 //在Grid上运行时，设置 Bool_t local = kFALSE，Bool gridTest = kFALSE
 //有一个ROOT5没有的模式称之为GridTest，可以不提交grid任务而进行远程测试，设置 Bool_t local = kFALSE，Bool gridTest = kTRUE
 
+//test git
 
 //当Grid上任务完成，不用改变 Bool_t local = kFALSE，Bool gridTest = kFALSE 的参数设置，
 //把213行的 alienHandler->SetRunMode("full") 改为 alienHandler->SetRunMode("terminate")
